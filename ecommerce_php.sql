@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- 主機： 127.0.0.1
--- 產生時間： 2024-05-17 15:41:50
--- 伺服器版本： 10.1.38-MariaDB
--- PHP 版本： 5.6.40
+-- 主機： localhost:8889
+-- 產生時間： 2024 年 06 月 09 日 11:46
+-- 伺服器版本： 5.7.39
+-- PHP 版本： 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,13 +30,23 @@ SET time_zone = "+00:00";
 CREATE TABLE `addbook` (
   `addressid` int(10) NOT NULL COMMENT '地址ID',
   `setdefault` tinyint(1) NOT NULL DEFAULT '0' COMMENT '預設收件人',
-  `emailid` int(10) NOT NULL COMMENT '會員編號',
+  `user_id` int(10) NOT NULL COMMENT '會員編號',
   `cname` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '收件者姓名',
-  `mobile` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '收件者電話',
+  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '收件者電話',
   `myzip` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '郵遞區號',
   `address` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '收件地址',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '建立日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 傾印資料表的資料 `addbook`
+--
+
+INSERT INTO `addbook` (`addressid`, `setdefault`, `user_id`, `cname`, `phone`, `myzip`, `address`, `create_date`) VALUES
+(8, 0, 9, 'alexander macqueen', '+886-986304122', NULL, '6f-1 #80 Sec. 1 Liuchan E. Rd.', '2024-06-06 10:03:29'),
+(14, 0, 9, '曹淳', '0986304122', NULL, '6f-1 #80 Sec. 1 Liuchan E. Rd.', '2024-06-06 11:38:58'),
+(15, 0, 9, 'TSAO CHUN', '0986304122', NULL, '柳川東路一段80號6f-1', '2024-06-06 11:59:10'),
+(27, 1, 9, '測試', '123456789', NULL, '南投市民間鄉中正路335號9樓', '2024-06-09 05:38:38');
 
 -- --------------------------------------------------------
 
@@ -75,7 +84,7 @@ INSERT INTO `carousel` (`caro_id`, `caro_title`, `caro_content`, `caro_online`, 
 
 CREATE TABLE `cart` (
   `cartid` int(10) NOT NULL COMMENT '購物車編號',
-  `emailid` int(10) DEFAULT NULL COMMENT '會員編號',
+  `user_id` int(10) DEFAULT NULL COMMENT '會員編號',
   `p_id` int(10) NOT NULL COMMENT '產品編號',
   `qty` int(3) NOT NULL COMMENT '產品數量',
   `orderid` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '訂單編號',
@@ -83,6 +92,23 @@ CREATE TABLE `cart` (
   `ip` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '訂購者的IP',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入購物車時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 傾印資料表的資料 `cart`
+--
+
+INSERT INTO `cart` (`cartid`, `user_id`, `p_id`, `qty`, `orderid`, `status`, `ip`, `create_date`) VALUES
+(29, 9, 4, 1, '20240609013841603', 8, '::1', '2024-06-09 05:38:04'),
+(30, 9, 4, 1, '20240609014423954', 8, '::1', '2024-06-09 05:44:18'),
+(31, 9, 3, 1, '20240609014857970', 8, '::1', '2024-06-09 05:48:52'),
+(32, 9, 5, 1, '20240609015032686', 8, '::1', '2024-06-09 05:49:53'),
+(33, 9, 11, 1, '20240609015057575', 8, '::1', '2024-06-09 05:50:43'),
+(34, 9, 1, 1, '20240609015310830', 8, '::1', '2024-06-09 05:52:55'),
+(35, 9, 7, 1, '20240609015310830', 8, '::1', '2024-06-09 05:53:02'),
+(36, 9, 3, 1, '20240609021100883', 8, '::1', '2024-06-09 05:53:24'),
+(37, 9, 4, 1, '20240609021119352', 8, '::1', '2024-06-09 06:11:12'),
+(38, 9, 4, 1, '20240609022825780', 8, '::1', '2024-06-09 06:28:15'),
+(39, NULL, 3, 1, NULL, 1, '::1', '2024-06-09 07:42:54');
 
 -- --------------------------------------------------------
 
@@ -145,16 +171,34 @@ CREATE TABLE `hot` (
 --
 
 CREATE TABLE `member` (
-  `emailid` int(11) NOT NULL COMMENT 'email流水號',
+  `user_id` int(11) NOT NULL COMMENT 'email流水號',
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT 'email帳號',
   `pw1` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '密碼',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否啟動',
-  `cname` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '中文姓名',
-  `tssn` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '身份證字號',
-  `birthday` date NOT NULL COMMENT '生日',
+  `cname` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '中文姓名',
+  `tssn` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '身份證字號',
+  `birthday` date DEFAULT NULL COMMENT '生日',
   `imgname` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '相片檔名',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '建立日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`user_id`, `email`, `pw1`, `active`, `cname`, `tssn`, `birthday`, `imgname`, `create_date`) VALUES
+(1, 'imxp978@Hotmail.com', '123456', 1, 'tt', 'a123456789', '2024-05-06', NULL, '2024-05-24 09:57:05'),
+(2, 'b642b4217b34b1e8d3bd915fc65c4452', '123456', 1, NULL, NULL, NULL, NULL, '2024-06-02 13:11:16'),
+(3, 'test@test.com', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL, NULL, NULL, NULL, '2024-06-02 13:12:16'),
+(4, 'test2@test.com', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL, NULL, NULL, NULL, '2024-06-02 13:14:27'),
+(5, 't1', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL, NULL, NULL, NULL, '2024-06-02 13:14:39'),
+(6, '.3', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL, NULL, NULL, NULL, '2024-06-02 13:15:42'),
+(7, 'imxp9782@Hotmail.com', '96e79218965eb72c92a549dd5a330112', 1, NULL, NULL, NULL, NULL, '2024-06-02 13:24:07'),
+(8, 'imxp9783@Hotmail.com', 'e3ceb5881a0a1fdaad01296d7554868d', 1, NULL, NULL, NULL, NULL, '2024-06-02 14:40:53'),
+(9, 'imxp9784@Hotmail.com', '96e79218965eb72c92a549dd5a330112', 1, NULL, NULL, NULL, NULL, '2024-06-02 14:49:29'),
+(10, 'a', '0cc175b9c0f1b6a831c399e269772661', 1, NULL, NULL, NULL, NULL, '2024-06-06 12:01:34'),
+(11, '1', 'c4ca4238a0b923820dcc509a6f75849b', 1, NULL, NULL, NULL, NULL, '2024-06-06 12:13:07'),
+(12, '2', 'c81e728d9d4c2f636f067f89cc14862c', 1, NULL, NULL, NULL, NULL, '2024-06-06 12:16:18');
 
 -- --------------------------------------------------------
 
@@ -182,11 +226,11 @@ CREATE TABLE `multiselect` (
 INSERT INTO `multiselect` (`msid`, `mslevel`, `msuplink`, `opcode`, `msname`, `msort`, `url1`, `url2`, `create_date`, `update_date`) VALUES
 (1, 1, 0, NULL, '付款方式', 0, NULL, NULL, '2023-08-11 09:46:53', '2023-08-17 03:42:28'),
 (2, 1, 0, NULL, '訂單處理狀態', 0, NULL, NULL, '2023-08-11 09:52:29', '2023-08-17 03:42:41'),
-(3, 2, 1, NULL, '貨到付款', 1, NULL, NULL, '2023-08-11 09:55:45', '2023-08-17 03:43:37'),
+(3, 2, 1, NULL, 'Cash on Delivery', 1, NULL, NULL, '2023-08-11 09:55:45', '2023-08-17 03:43:37'),
 (4, 2, 1, NULL, '信用卡付款', 2, NULL, NULL, '2023-08-11 09:55:45', '2023-08-17 03:43:54'),
 (5, 2, 1, NULL, '銀行轉帳', 3, NULL, NULL, '2023-08-11 09:55:45', '2023-08-17 03:44:37'),
 (6, 2, 1, NULL, '電子支付', 4, NULL, NULL, '2023-08-11 09:55:45', '2023-08-17 03:44:51'),
-(7, 2, 2, NULL, '處理中', 1, NULL, NULL, '2023-08-11 10:06:42', '2023-08-17 03:45:03'),
+(7, 2, 2, NULL, 'Processing', 1, NULL, NULL, '2023-08-11 10:06:42', '2023-08-17 03:45:03'),
 (8, 2, 2, NULL, '待出貨', 2, NULL, NULL, '2023-08-11 10:06:42', '2023-08-17 03:45:32'),
 (9, 2, 2, NULL, '運送中', 3, NULL, NULL, '2023-08-11 10:06:42', '2023-08-17 03:45:45'),
 (10, 2, 2, NULL, '收貨完成', 4, NULL, NULL, '2023-08-11 10:06:42', '2023-08-17 03:46:10'),
@@ -739,14 +783,29 @@ INSERT INTO `town` (`townNo`, `Name`, `Post`, `State`, `AutoNo`) VALUES
 
 CREATE TABLE `uorder` (
   `orderid` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '訂單編號',
-  `emailid` int(10) NOT NULL COMMENT '會員編號',
-  `addressid` int(10) NOT NULL COMMENT '收件人編號',
-  `howpay` tinyint(4) NOT NULL DEFAULT '1' COMMENT '如何付款',
-  `paystatus` int(5) DEFAULT NULL COMMENT '付款狀態',
+  `user_id` int(10) NOT NULL COMMENT '會員編號',
+  `cname` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `address` text COLLATE utf8_unicode_ci NOT NULL,
+  `payment_method` tinyint(4) NOT NULL DEFAULT '1' COMMENT '付款方式',
+  `payment_status` int(5) DEFAULT NULL COMMENT '付款狀態',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '訂單處理狀態',
   `remark` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '備註',
-  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '訂單時間'
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '訂單時間'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+--
+-- 傾印資料表的資料 `uorder`
+--
+
+INSERT INTO `uorder` (`orderid`, `user_id`, `cname`, `phone`, `address`, `payment_method`, `payment_status`, `status`, `remark`, `create_time`) VALUES
+('20240609014857970', 9, '測試', '123456789', '南投市民間鄉中正路335號9樓', 3, 35, 7, NULL, '2024-06-09 05:48:57'),
+('20240609015032686', 9, 'testing2', '12345', '義大利米蘭聖母院廣場路12號', 3, 35, 7, NULL, '2024-06-09 05:50:32'),
+('20240609015057575', 9, 'alexander macqueen', '+886-986304122', '6f-1 #80 Sec. 1 Liuchan E. Rd.', 3, 35, 7, NULL, '2024-06-09 05:50:57'),
+('20240609015310830', 9, 'TSAO CHUN', '0986304122', '柳川東路一段80號6f-1', 3, 35, 7, NULL, '2024-06-09 05:53:10'),
+('20240609021100883', 9, '測試', '123456789', '南投市民間鄉中正路335號9樓', 3, 35, 7, '', '2024-06-09 06:11:00'),
+('20240609021119352', 9, '測試', '123456789', '南投市民間鄉中正路335號9樓', 3, 35, 7, 'test', '2024-06-09 06:11:19'),
+('20240609022825780', 9, '測試', '123456789', '南投市民間鄉中正路335號9樓', 3, 35, 7, '有遍台北食區嗎', '2024-06-09 06:28:25');
 
 --
 -- 已傾印資料表的索引
@@ -786,7 +845,7 @@ ALTER TABLE `hot`
 -- 資料表索引 `member`
 --
 ALTER TABLE `member`
-  ADD PRIMARY KEY (`emailid`),
+  ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -832,77 +891,77 @@ ALTER TABLE `uorder`
   ADD PRIMARY KEY (`orderid`);
 
 --
--- 在傾印的資料表使用自動增長(AUTO_INCREMENT)
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `addbook`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `addbook`
 --
 ALTER TABLE `addbook`
-  MODIFY `addressid` int(10) NOT NULL AUTO_INCREMENT COMMENT '地址ID';
+  MODIFY `addressid` int(10) NOT NULL AUTO_INCREMENT COMMENT '地址ID', AUTO_INCREMENT=29;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `carousel`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `carousel`
 --
 ALTER TABLE `carousel`
   MODIFY `caro_id` int(3) NOT NULL AUTO_INCREMENT COMMENT '輪播編號', AUTO_INCREMENT=6;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `cart`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartid` int(10) NOT NULL AUTO_INCREMENT COMMENT '購物車編號';
+  MODIFY `cartid` int(10) NOT NULL AUTO_INCREMENT COMMENT '購物車編號', AUTO_INCREMENT=40;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `city`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `city`
 --
 ALTER TABLE `city`
   MODIFY `AutoNo` int(10) NOT NULL AUTO_INCREMENT COMMENT '城市編號', AUTO_INCREMENT=24;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `hot`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `hot`
 --
 ALTER TABLE `hot`
   MODIFY `h_id` int(3) NOT NULL AUTO_INCREMENT COMMENT '熱銷商品流水號';
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `member`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `emailid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'email流水號';
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'email流水號', AUTO_INCREMENT=13;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `multiselect`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `multiselect`
 --
 ALTER TABLE `multiselect`
   MODIFY `msid` int(5) NOT NULL AUTO_INCREMENT COMMENT '多功能選擇ID', AUTO_INCREMENT=39;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `product`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
   MODIFY `p_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '產品編號', AUTO_INCREMENT=13;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `product_img`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product_img`
 --
 ALTER TABLE `product_img`
   MODIFY `img_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '圖檔編號', AUTO_INCREMENT=25;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `pyclass`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `pyclass`
 --
 ALTER TABLE `pyclass`
-  MODIFY `classid` int(3) NOT NULL AUTO_INCREMENT COMMENT '產品類別', AUTO_INCREMENT=118;
+  MODIFY `classid` int(3) NOT NULL AUTO_INCREMENT COMMENT '產品類別', AUTO_INCREMENT=12;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `review`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `review`
 --
 ALTER TABLE `review`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- 使用資料表自動增長(AUTO_INCREMENT) `town`
+-- 使用資料表自動遞增(AUTO_INCREMENT) `town`
 --
 ALTER TABLE `town`
   MODIFY `townNo` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '鄕鎮市編號', AUTO_INCREMENT=374;
