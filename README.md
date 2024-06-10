@@ -4,8 +4,6 @@
 
 前端：HTML, CSS, Javascript | 後端：PHP, MySQL | 第三方套件：Bootstrap, Swiper
 
-demo: http://tsaochun.byethost5.com
-
 =================
 
 Ecommerce website
@@ -13,6 +11,8 @@ Ecommerce website
 with products display, categories display, single product display, member signup, member login/logout, shopping cart, shipping address book, order book
 
 frontend: HTML, CSS, Javascript | backend: PHP, MySQL | 3rd party libraries: Bootstrap, Swiper
+
+=================
 
 demo: http://tsaochun.byethost5.com
 
