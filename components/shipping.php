@@ -210,21 +210,11 @@
                     .then(data => {
                         notice(data.message);
                         if (data.success) {
-<<<<<<< HEAD
-=======
-                            notice(data.message);
-                            msg.innerHTML = data.message;
-                            msg.style.color = 'green';
->>>>>>> 1f8b8b6 (daily update)
                             setTimeout(() => {
                                 window.location.reload();
                             }, 1000)
                         } else {
                             console.log(data.message);
-<<<<<<< HEAD
-=======
-                            notice(data.message);
->>>>>>> 1f8b8b6 (daily update)
                         }
                     })
                     .catch(error => {
