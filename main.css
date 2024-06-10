@@ -286,7 +286,7 @@ li {
 #notice.active {
   color: white;
   opacity: 1;
-  z-index: 3;
+  z-index: 99;
   transition: 0.3s;
 }
 
