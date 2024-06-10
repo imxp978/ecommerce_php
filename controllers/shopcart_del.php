@@ -1,4 +1,4 @@
-<?php require_once('connections/conn_db.php'); ?>
+<?php require_once('../connections/conn_db.php'); ?>
 <?php
     if(isset($_GET['mode']) && $_GET['mode']!=''){
         $mode=$_GET['mode'];
@@ -13,6 +13,6 @@
         }
         $result=$link->query($SQLstring);
     }
-    $deleteGoto="cart.php";
+    $deleteGoto="../cart.php";
     header(sprintf("location:%s", $deleteGoto));
 ?>

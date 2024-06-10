@@ -3,7 +3,7 @@
 header('Access-Control-Allow-Origin:*');
 header('Content-Type: application/json;charset=utf-8'); // return json string
 
-require_once('connections/conn_db.php');
+require_once('../connections/conn_db.php');
 
 if (isset($_POST['cartid']) && isset($_POST['qty'])) {
     $cartid = $_POST['cartid'];

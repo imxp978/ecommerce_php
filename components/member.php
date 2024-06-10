@@ -31,7 +31,6 @@
                             </div>
                             <hr>
                         </div>
-<<<<<<< HEAD
                     <?php $i = 0;
                     while ($data = $orders->fetch()) { ?>
                         <div class="accordion-item mt-5">
@@ -82,23 +81,6 @@
                                                 <div class="col-2"><?php echo $data2['p_price'] * $data2['qty']; ?></div>
                                                 <div class="col-2"></div>
 
-=======
-                        <?php $i = 0;
-                        while ($data = $orders->fetch()) { ?>
-                            <div class="accordion-item mt-5">
-                                <div class="accordion-header" id="flush-heading<?php echo $i; ?>">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?php echo $i; ?>" aria-expanded="false" aria-controls="flush-collapseOne">
-                                        <div class="container bg-light bg-gradient">
-                                            <hr>
-                                            <div class="row text-start">
-                                                <div class="col-12 col-lg-2"><?php echo $data['orderid']; ?></div>
-                                                <div class="col-12 col-lg-2"><?php echo $data['ordertime']; ?></div>
-                                                <div class="col-6 col-lg-1"><?php echo $data['cname']; ?></div>
-                                                <div class="col-6 col-lg-4"><?php echo $data['address']; ?></div>
-                                                <div class="col-6 col-lg-1"><?php echo $data['payment_method']; ?></div>
-                                                <div class="col-6 col-lg-1 text-success"><?php echo $data['status']; ?></div>
-                                                <div class="col-1 d-none d-lg-block d-xl-block d-xxl-block"><?php echo $data['remark']; ?></div>
->>>>>>> 1f8b8b6 (daily update)
                                             </div>
                                             <hr>
                                         </div>

@@ -3,7 +3,7 @@
 }
 ?>
 
-<?php require_once('connections/conn_db.php'); ?>
+<?php require_once('../connections/conn_db.php'); ?>
 <?php
 if (isset($_GET['mode']) && $_GET['mode'] != '') {
     $mode = $_GET['mode'];
@@ -15,6 +15,6 @@ if (isset($_GET['mode']) && $_GET['mode'] != '') {
     }
     $result = $link->query($SQLstring);
 }
-$deleteGoto = "shipping.php";
+$deleteGoto = "../shipping.php";
 header(sprintf("location:%s", $deleteGoto));
 ?>
