@@ -10,7 +10,9 @@
 第三方套件：Bootstrap, Swiper  
   
 將ecommerce_php.sql匯入資料庫以檢視  
-
+  
+## demo: ##     
+http://tsaochun.byethost5.com
 
     
 # Ecommerce website #
