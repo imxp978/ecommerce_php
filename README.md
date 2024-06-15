@@ -4,7 +4,7 @@
 主要功能包括：    
 所有商品展示、商品分類展示、商品頁、會員註冊、會員登入登出、購物車、收件地址簿、訂單簿．  
 
-## 使用工具 ##  
+## 使用工具: ##  
 前端：HTML, CSS, Javascript  
 後端：PHP, MySQL  
 第三方套件：Bootstrap, Swiper  
@@ -21,7 +21,7 @@ This is a ecommerce website project, using javascript and PHP for both frontend 
 main functions are:   
 products display, categories display, single product display, member signup, member login/logout, shopping cart, shipping address book, order book  
 
-## tools ##    
+## tools: ##    
 frontend: HTML, CSS, Javascript  
 backend: PHP, MySQL  
 3rd party libraries: Bootstrap, Swiper  
